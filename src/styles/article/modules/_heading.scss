@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'sass:color';
 
 // 标题基础样式
 %heading-base {
@@ -100,7 +101,7 @@
   border-bottom: 2px solid $macaron-lavender;
   padding-bottom: 0.8rem;
   margin-bottom: 2rem;
-  background: linear-gradient(120deg, $text-primary 0%, mix($macaron-sky, $text-primary, 30%) 100%);
+  background: linear-gradient(120deg, $text-primary 0%, color.mix($macaron-sky, $text-primary, 30%) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   
@@ -108,7 +109,7 @@
     background: linear-gradient(120deg, $text-light 0%, $macaron-sky 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    border-bottom-color: mix($macaron-lavender, $bg-dark, 30%);
+    border-bottom-color: color.mix($macaron-lavender, $bg-dark, 30%);
   }
 }
 
