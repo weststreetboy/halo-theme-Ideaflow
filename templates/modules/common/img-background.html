@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <!-- 大型头图背景组件 -->
+
+  <div th:fragment="img-background" class="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
+    <!-- 背景图片 -->
+    <div
+      x-data="{ 
+      backgroundImage: 'https://oss.wangpl.online/backgroundPicture.avif',
+      init() {
+        // 这里可以添加随机图片逻辑
+      }
+    }"
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
+      :style="{ backgroundImage: `url('${backgroundImage}')` }"
+    >
+      <!-- 暗黑模式遮罩层 -->
+      <div class="bg-black/1 absolute inset-0 transition-opacity duration-300 dark:bg-black/40"></div>
+    </div>
+
+    <!-- 插入星空效果 -->
+    <th:block th:replace="~{modules/common/starry}"></th:block>
+
+    <!-- 插入波浪效果 -->
+    <th:block th:replace="~{modules/common/ripple}"></th:block>
+  </div>
+</html>

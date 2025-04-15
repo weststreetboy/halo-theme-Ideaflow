@@ -1,0 +1,39 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-Ideaflow
+spec:
+  displayName: theme-Ideaflow
+  author:
+    name: Halo
+    website: https://github.com/halo-dev
+  description: custom develop
+  logo: https://www.halo.run/logo
+  homepage: https://github.com/halo-dev/theme-modern-starter#readme
+  repo: https://github.com/halo-dev/theme-modern-starter
+  issues: https://github.com/halo-dev/theme-modern-starter/issues
+  settingName: "theme-Ideaflow-setting"
+  configMapName: "theme-Ideaflow-configMap"
+  version: "1.0.0"
+  requires: "2.0.0"
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/halo-dev/theme-modern-starter/blob/main/LICENSE"
+  customTemplates:
+    page:
+      - name: 友情链接
+        description: 友情链接
+        screenshot:
+        file: links.html
+      - name: 图库
+        description: 图库
+        screenshot:
+        file: photos.html
+      - name: 瞬间
+        description: 瞬间
+        screenshot:
+        file: moments.html
+      - name: 素笺存忆
+        description: 素笺存忆
+        screenshot:
+        file: category_tag.html

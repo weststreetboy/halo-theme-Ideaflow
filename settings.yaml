@@ -1,0 +1,49 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-Ideaflow-setting
+spec:
+  forms:
+    - group: blogger
+      label: 博主信息
+      formSchema:
+        - $formkit: attachment
+          name: avatar
+          label: 博主头像
+          value: ""
+          help: "设置博主头像，建议尺寸200x200"
+        - $formkit: text
+          name: nickname
+          label: 博主昵称
+          value: ""
+          help: "设置博主昵称，默认使用站点标题"
+        - $formkit: text
+          name: bio
+          label: 个人简介
+          value: ""
+          help: "一句话介绍自己"
+        - $formkit: text
+          name: location
+          label: 所在地
+          value: ""
+          help: "设置所在地，如：北京"
+        - $formkit: repeater
+          name: social_links
+          label: 社交链接
+          value: []
+          children:
+            - $formkit: text
+              name: platform
+              label: 平台
+              value: ""
+              validation: required
+            - $formkit: url
+              name: url
+              label: 链接
+              value: ""
+              validation: required
+            - $formkit: text
+              name: icon
+              label: 图标
+              value: ""
+              help: "使用SVG图标代码"
