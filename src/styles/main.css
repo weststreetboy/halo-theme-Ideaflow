@@ -30,6 +30,11 @@ body {
   background: var(--scrollbar-thumb-hover);
 }
 
+/* Alpine.js相关 */
+[x-cloak] {
+  display: none !important;
+}
+
 /* 字体相关 */
 @font-face {
   font-family: blog-font;
