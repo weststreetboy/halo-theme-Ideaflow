@@ -1,17 +1,17 @@
 <!-- 文章卡片列表 -->
 <article th:each="post : ${posts.items}"  >
 
-  <div class=" rounded-[1.5rem] overflow-hidden relative block cursor-pointer border border-gray-100 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl dark:border-gray-700 dark:bg-gray-800">
+  <div class="rounded-lg overflow-hidden relative block cursor-pointer border border-gray-100 shadow-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl dark:border-gray-700 dark:bg-gray-800">
     <a
       th:href="${post.status.permalink}"
 
     >
       <!-- 封面图片 -->
-      <div class="relative flex h-48 items-center justify-center overflow-hidden">
+      <div class="relative flex h-48 items-center justify-center overflow-hidden rounded-br-lg">
         <!-- 置顶标识 -->
         <div
           th:if="${post.spec.pinned}"
-          class="absolute left-0 top-0 z-10  bg-gradient-to-r from-amber-500 to-red-500 px-2 py-1 text-xs  rounded-br-lg text-white "
+          class="absolute left-0 top-0 z-10  bg-gradient-to-r from-violet-500/90 to-purple-400/90 px-2 py-1 text-xs  rounded-br-lg text-white "
         >
           置顶
         </div>
