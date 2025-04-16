@@ -4,6 +4,24 @@ metadata:
   name: theme-Ideaflow-setting
 spec:
   forms:
+    - group: home
+      label:  首页配置
+      formSchema:
+
+        - $formkit: repeater
+          name: backgroundImgs
+          label: 背景大图
+          value: [ ]
+          max: 5
+          min: 1
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: 图片
+              accepts:
+                - "image/*"
+            
     - group: blogger
       label: 博主信息
       formSchema:
@@ -30,6 +48,7 @@ spec:
         - $formkit: repeater
           name: social_links
           label: 社交链接
+          id: social_links
           value: []
           children:
             - $formkit: text

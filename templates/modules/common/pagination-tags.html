@@ -32,7 +32,7 @@
     <!-- 第一页 -->
     <a
       th:href="@{${tag.status.permalink} + '/page/1'}"
-      th:class="${posts.page == 1 ? 'inline-flex text-text-base' : 'xx'} group h-8 w-8 items-center justify-center rounded-full bg-primary hover:scale-100      "
+      th:class="${posts.page == 1 ? 'inline-flex text-text-base group h-8 w-8 items-center justify-center rounded-full bg-primary hover:scale-100 ' : 'xx'}      "
       >1</a
     >
 
@@ -46,7 +46,7 @@
         th:if="${i < posts.totalPages}"
         th:href="@{${tag.status.permalink} + '/page/' + ${i}}"
         th:text="${i}"
-        th:class="${posts.page == i ? 'group ' : 'xx'}  inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-text-base hover:scale-100   "
+        th:class="${posts.page == i ? 'group inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-text-base hover:scale-100  ' : 'xx'}    "
       ></a>
     </th:block>
 
@@ -58,7 +58,7 @@
       th:if="${posts.totalPages > 1}"
       th:href="@{${tag.status.permalink} + '/page/' + ${posts.totalPages}}"
       th:text="${posts.totalPages}"
-      th:class="${posts.page == posts.totalPages ? ' hover:scale-100' : 'xx'} group inline-flex h-8 w-8 items-center justify-center rounded-full  bg-primary text-text-base   "
+      th:class="${posts.page == posts.totalPages ? ' hover:scale-100 group inline-flex h-8 w-8 items-center justify-center rounded-full  bg-primary text-text-base ' : 'xx'}   "
     ></a>
   </div>
 

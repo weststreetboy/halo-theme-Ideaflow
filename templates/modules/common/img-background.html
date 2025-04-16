@@ -4,19 +4,20 @@
 
   <div th:fragment="img-background" class="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
     <!-- 背景图片 -->
+
     <div
-      x-data="{ 
-      backgroundImage: 'https://oss.wangpl.online/backgroundPicture.avif',
-      init() {
-        // 这里可以添加随机图片逻辑
-      }
-    }"
-      class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000"
-      :style="{ backgroundImage: `url('${backgroundImage}')` }"
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 flex items-center justify-center"
     >
+      <img
+        th:if="${theme.config.home.backgroundImgs}"
+        th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.home.backgroundImgs))}"
+        th:src="${theme.config.home.backgroundImgs[randomIndex].url}"
+        class="w-full h-full object-cover" />
+
       <!-- 暗黑模式遮罩层 -->
       <div class="bg-black/1 absolute inset-0 transition-opacity duration-300 dark:bg-black/40"></div>
     </div>
+    
 
     <!-- 插入星空效果 -->
     <th:block th:replace="~{modules/common/starry}"></th:block>
