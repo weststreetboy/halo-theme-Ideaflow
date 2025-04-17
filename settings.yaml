@@ -4,14 +4,20 @@ metadata:
   name: theme-Ideaflow-setting
 spec:
   forms:
-    - group: home
-      label:  首页配置
+    - group: common
+      label: 公共配置
       formSchema:
-
+        - $formkit: attachment
+          name: favicon
+          label: 网站图标
+          value: ""
+          help: "设置网站图标，建议使用.ico格式"
+          accepts:
+            - "image/*"
         - $formkit: repeater
           name: backgroundImgs
           label: 背景大图
-          value: [ ]
+          value: []
           max: 5
           min: 1
           children:
@@ -21,6 +27,51 @@ spec:
               label: 图片
               accepts:
                 - "image/*"
+    - group: footer
+      label: 页脚配置
+      formSchema:
+        - $formkit: attachment
+          name: footerAnimalImage
+          label: 页脚动物装饰图
+          value: ""
+          help: "设置页脚动物装饰图片"
+          accepts:
+            - "image/*"
+        - $formkit: text
+          name: footerSlogan
+          label: 页脚标语
+          value: ""
+          help: "设置页脚显示的个性化标语"
+        - $formkit: text
+          name: contactEmail
+          label: 联系邮箱
+          value: ""
+          help: "设置联系邮箱地址"
+        - $formkit: text
+          name: contactText
+          label: 联系文本
+          value: "联系我"
+          help: "设置联系链接显示的文本"
+        - $formkit: text
+          name: supportText
+          label: 支持文本
+          value: ""
+          help: "设置网站支持信息文本"
+        - $formkit: url
+          name: supportLink
+          label: 支持链接
+          value: ""
+          help: "设置网站支持信息链接"
+        - $formkit: text
+          name: icp
+          label: 备案号
+          value: ""
+          help: "设置网站备案号"
+        - $formkit: url
+          name: icpLink
+          label: 备案链接
+          value: ""
+          help: "设置备案信息链接"
             
     - group: blogger
       label: 博主信息

@@ -29,33 +29,33 @@
     </h3>
 
     <!-- 标签云 -->
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-2 " >
       <a
         th:each="tag : ${tagFinder.listAll()}"
         th:href="${tag.status.permalink}"
         th:text="${tag.spec.displayName}"
         x-data="{
           gradients: [
-            'from-blue-100 to-blue-200',
-            'from-teal-100 to-teal-200',
-            'from-purple-100 to-purple-200',
-            'from-rose-100 to-rose-200',
-            'from-amber-100 to-amber-200',
-            'from-indigo-100 to-indigo-200',
-            'from-green-100 to-green-200',
-            'from-sky-100 to-sky-200',
-            'from-gray-100 to-gray-200',
-            'from-slate-100 to-slate-200'
+            'from-blue-100 to-blue-200 ',
+            'from-teal-100 to-teal-200 ',
+            'from-purple-100 to-purple-200 ',
+            'from-rose-100 to-rose-200 ',
+            'from-amber-100 to-amber-200 ',
+            'from-indigo-100 to-indigo-200 ',
+            'from-green-100 to-green-200 ',
+            'from-sky-100 to-sky-200 ',
+            'from-gray-100 to-gray-200 ',
+            'from-slate-100 to-slate-200 '
           ],
           randomGradient: function() {
             return this.gradients[Math.floor(Math.random() * this.gradients.length)];
           }
         }"
-        :class="randomGradient() + ' group relative inline-flex transform items-center rounded-full bg-gradient-to-r px-3 py-1.5 text-sm font-medium text-text-base shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg dark:text-gray-300'"
+        :class="randomGradient() + ' relative inline-flex transform items-center rounded-full bg-gradient-to-r px-3 py-1.5 text-sm text-gray-600 dark:text-gray-600 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-lg '"
       >
         <!-- 悬浮效果 -->
         <div
-          class="absolute inset-0 rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-10"
+          class="absolute inset-0 rounded-full bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-10 dark:bg-gray-100"
         ></div>
       </a>
     </div>

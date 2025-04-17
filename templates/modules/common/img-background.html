@@ -9,9 +9,9 @@
       class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 flex items-center justify-center"
     >
       <img
-        th:if="${theme.config.home.backgroundImgs}"
-        th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.home.backgroundImgs))}"
-        th:src="${theme.config.home.backgroundImgs[randomIndex].url}"
+        th:if="${theme.config.common.backgroundImgs}"
+        th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
+        th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
         class="w-full h-full object-cover" />
 
       <!-- 暗黑模式遮罩层 -->
