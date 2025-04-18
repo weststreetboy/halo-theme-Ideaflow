@@ -1,32 +1,22 @@
-# Theme Modern Starter
+## 首页
+![image.png](/images/0b35996da01d3087e6c08bf2bbce0c65.webp)
 
-一个集成了现代前端技术栈的 Halo 2.0 的主题开发模板。
 
-主题开发文档可查阅：<https://docs.halo.run/2.0.0-SNAPSHOT/developer-guide/theme/prepare>
+![image.png](/images/03803e1ef9f8d3b02d4cb11473191817.webp)
 
-## 特性
+## 友情链接
 
-- 使用 [Vite](https://vitejs.dev/) 进行静态资源构建。
-- 使用 [Tailwind CSS](https://tailwindcss.com/) 进行样式开发。
-- 使用 [@tailwindcss/typography](https://tailwindcss.com/docs/typography-plugin) 作为内容样式。
-- 使用 [Iconify](https://iconify.design/) + [@iconify/tailwind](https://iconify.design/docs/usage/css/tailwind/#installation) 作为图标方案。
-- 集成了 [Alpine.js](https://alpinejs.dev/)。
-- 集成了 ESLint + Prettier。
+![image.png](/images/596480f96e79c89df8762fca229f89ef.webp)
 
-## 开发
+## 相册
+![image.png](/images/0cd5f3a64a795373519fcba8ff753090.webp)
 
-```bash
-git clone git@github.com:halo-dev/theme-modern-starter.git ~/halo2-dev/themes/theme-modern-starter
-```
+## 瞬间
+![image.png](/images/fd7a6ef4f3b995859540dd92f0062c39.webp)
 
-```bash
-cd ~/halo2-dev/themes/theme-modern-starter
-```
+## 归档
+![image.png](/images/aca89089f1201e86e25fe0a78592c060.webp)
 
-```bash
-pnpm install 
-```
+## 文章内容页面
+![image.png](/images/78c8b104e069eb3115f09a4b39b23237.webp)
 
-```bash
-pnpm dev
-```
