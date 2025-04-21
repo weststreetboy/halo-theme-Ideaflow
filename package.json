@@ -1,45 +1,22 @@
 {
-  "description": "A development starter theme with modern front-end technology stack for Halo",
-  "keywords": [
-    "halo",
-    "halo-theme"
-  ],
-  "homepage": "https://github.com/halo-dev/theme-modern-starter#readme",
-  "bugs": {
-    "url": "https://github.com/halo-dev/theme-modern-starter/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/halo-dev/theme-modern-starter"
-  },
   "license": "GPL-3.0",
-  "author": {
-    "name": "Halo",
-    "email": "hi@halo.run",
-    "url": "https://github.com/halo-dev"
-  },
-  "maintainers": [
-    {
-      "name": "Ryan Wang",
-      "email": "i@ryanc.cc",
-      "url": "https://github.com/ruibaby"
-    }
-  ],
   "scripts": {
-    "build": "vite build",
+    "build": "vite build && pnpm package",
+    "build-only": "vite build",
     "dev": "vite build --watch",
     "lint": "eslint ./src --ext .js,.cjs,.mjs,.ts,.cts,.mts --ignore-path .gitignore",
-    "prettier": "prettier --write './**/*.{ts,json,yaml,yml,html}'",
-    "prepare": "husky"
-  },
-  "dependencies": {
-    "alpinejs": "^3.13.7",
-    "sass": "^1.86.3"
+    "package": "npx @halo-dev/theme-package-cli",
+    "prepare": "husky",
+    "prettier": "prettier --write './**/*.{ts,json,yaml,yml,html}'"
   },
   "lint-staged": {
     "*.{ts,json,yaml,yml,html}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "alpinejs": "^3.13.7",
+    "sass": "^1.86.3"
   },
   "devDependencies": {
     "@iconify-json/tabler": "^1.1.109",
