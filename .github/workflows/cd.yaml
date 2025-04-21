@@ -13,6 +13,6 @@ jobs:
     permissions:
       contents: write
     with:
-      app-id: app-KgWqR
+      app-id: app-JyXQH
       pnpm-version: 9
       node-version: 20
