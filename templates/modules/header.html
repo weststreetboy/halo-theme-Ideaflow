@@ -81,7 +81,7 @@
             >
               <img
                 class="h-8 w-8 transform rounded-full object-cover shadow-lg ring-2 ring-white/30 transition-all duration-300 hover:shadow-xl group-hover:ring-blue-500/50 dark:ring-gray-700/30 dark:group-hover:ring-blue-400/50"
-                th:src="${currentUser.avatar}"
+                th:src="${currentUser.avatar ?: '/themes/theme-Ideaflow/assets/img/default-avatar.png'}"
                 th:alt="${currentUser.displayName}"
               />
               <svg
