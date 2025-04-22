@@ -6,18 +6,23 @@
     <!-- 背景图片 -->
 
     <div
-      class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 flex items-center justify-center"
+      class="absolute inset-0 flex items-center justify-center bg-cover bg-center bg-no-repeat transition-transform duration-1000"
     >
       <img
-        th:if="${theme.config.common.backgroundImgs}"
+        th:if="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
         th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
         th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
-        class="w-full h-full object-cover" />
+        class="h-full w-full object-cover"
+      />
+      <img
+        th:unless="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
+        th:src="@{/assets/img/animals.webp}"
+        class="h-full w-full object-cover"
+      />
 
       <!-- 暗黑模式遮罩层 -->
       <div class="bg-black/1 absolute inset-0 transition-opacity duration-300 dark:bg-black/40"></div>
     </div>
-    
 
     <!-- 插入星空效果 -->
     <th:block th:replace="~{modules/common/starry}"></th:block>
