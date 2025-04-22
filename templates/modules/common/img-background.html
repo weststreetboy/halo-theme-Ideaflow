@@ -8,17 +8,14 @@
     <div
       class="absolute inset-0 flex items-center justify-center bg-cover bg-center bg-no-repeat transition-transform duration-1000"
     >
-      <img
-        th:if="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
-        th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
-        th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
-        class="h-full w-full object-cover"
-      />
-      <img
-        th:unless="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
-        th:src="@{/assets/img/animals.webp}"
-        class="h-full w-full object-cover"
-      />
+      <div class="h-full w-full object-cover">
+        <img
+          th:if="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
+          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
+          th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
+        />
+        <img th:unless="${ #lists.isEmpty(theme.config.common.backgroundImgs)}" th:src="@{/assets/img/imbg.avif}" />
+      </div>
 
       <!-- 暗黑模式遮罩层 -->
       <div class="bg-black/1 absolute inset-0 transition-opacity duration-300 dark:bg-black/40"></div>
