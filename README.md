@@ -23,19 +23,25 @@
 
 # 赞助 
 
-<div style="display: flex; justify-content: center; gap: 30px; margin: 20px 0">
-  <div>
-    <img src="/images/wx.png" alt="微信赞助" width="200"/>
-    <p style="text-align: center">微信赞助</p>
-  </div>
-  <div>
-    <img src="/images/zfb.png" alt="支付宝赞助" width="200"/>
-    <p style="text-align: center">支付宝赞助</p>
-  </div>
-</div>
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="/images/wx.png" alt="微信赞助" width="200"/><br/>
+      <sub>微信赞助</sub>
+    </td>
+    <td width="50"></td> <!-- 添加间距 -->
+    <td align="center">
+      <img src="/images/zfb.png" alt="支付宝赞助" width="200"/><br/>
+      <sub>支付宝赞助</sub>
+    </td>
+  </tr>
+</table>
+
+
 
 ✨ 温馨提示：
 1. 赞助将用于服务器维护、域名续费等基础运营（不用很多，小小心意就够啦~）
 2. 赞助者提出的需求/建议将获得**最高优先级**实现
-3. 赞助者信息将展示在：[示例网站]([halo.ideaflow.top](https://halo.ideaflow.top/)) 和 [GitHub仓库](https://github.com/Idea-flow/theme-Ideaflow) 的荣誉墙,有第一位赞助了,再开发,偷个懒~ 哈哈
+3. 赞助者信息将展示在：[示例网站](https://halo.ideaflow.top/) 和 [GitHub仓库](https://github.com/Idea-flow/theme-Ideaflow) 的荣誉墙,有第一位赞助了,再开发,偷个懒~ 哈哈
 4. 感谢各位俊男靓女的支持！ღ( ´･ᴗ･` ) 
