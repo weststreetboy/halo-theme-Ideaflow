@@ -9,12 +9,29 @@
       class="absolute inset-0 flex items-center justify-center bg-cover bg-center bg-no-repeat transition-transform duration-1000"
     >
       <div class="h-full w-full object-cover">
+        <!-- 视频背景 -->
+        <video
+          th:if="${not #lists.isEmpty(theme.config.common.backgroundVideos)}"
+          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundVideos))}"
+          th:src="${theme.config.common.backgroundVideos[randomIndex].url}"
+          class="h-full w-full object-cover"
+          autoplay
+          loop
+          muted
+          playsinline
+        ></video>
+        <!-- 图片背景 -->
         <img
-          th:if="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
+          th:if="${#lists.isEmpty(theme.config.common.backgroundVideos) and not #lists.isEmpty(theme.config.common.backgroundImgs)}"
           th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
           th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
+          class="h-full w-full object-cover"
         />
-        <img th:unless="${ #lists.isEmpty(theme.config.common.backgroundImgs)}" th:src="@{/assets/img/imbg.avif}" />
+        <img
+          th:unless="${not #lists.isEmpty(theme.config.common.backgroundVideos) or not #lists.isEmpty(theme.config.common.backgroundImgs)}"
+          th:src="@{/assets/img/imbg.avif}"
+          class="h-full w-full object-cover"
+        />
       </div>
 
       <!-- 暗黑模式遮罩层 -->

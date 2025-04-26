@@ -15,11 +15,26 @@ spec:
           accepts:
             - "image/*"
         - $formkit: repeater
+          name: backgroundVideos
+          label: 背景视频
+          value: []
+          max: 5
+          min: 0
+          help: "设置背景视频，优先于背景图片显示"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: 视频
+              accepts:
+                - "video/*"
+        - $formkit: repeater
           name: backgroundImgs
           label: 背景大图
           value: []
           max: 5
           min: 1
+          help: "当没有配置视频时显示背景图片"
           children:
             - $formkit: attachment
               name: url
@@ -37,6 +52,11 @@ spec:
           help: "设置页脚动物装饰图片"
           accepts:
             - "image/*"
+        - $formkit: checkbox
+          name: showFooterAnimalImageOnMobile
+          label: 移动端显示动物装饰图
+          value: false
+          help: "设置是否在移动端显示页脚动物装饰图片"
         - $formkit: text
           name: footerSlogan
           label: 页脚标语
@@ -72,7 +92,17 @@ spec:
           label: 备案链接
           value: ""
           help: "设置备案信息链接"
-            
+        - $formkit: text
+          name: ga
+          label: 公安备案号
+          value: ""
+          help: "设置公安备案号"
+        - $formkit: url
+          name: gaLink
+          label: 备案链接
+          value: ""
+          help: "设置备案信息链接"
+
     - group: blogger
       label: 博主信息
       formSchema:
