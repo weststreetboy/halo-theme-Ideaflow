@@ -2,32 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <!-- 侧边栏容器 -->
   <div class="space-y-8">
-    <!-- 作者卡片 -->
-    <div th:if="${theme.config.sidebar.showAuthorCard}">
-      <th:block  th:replace="~{modules/sidebar/author-card}"></th:block>
-
-    </div>
-    <!-- 随机视频 -->
-    <div th:if="${theme.config.sidebar.showRandomVideo}">
-  
-      <th:block  th:replace="~{modules/sidebar/random-video}"></th:block>
-
-    </div>
-
-    <div th:if="${theme.config.sidebar.showHotPosts}">
-      <!-- 最新文章 -->
-      <th:block  th:replace="~{modules/sidebar/hot-posts}"></th:block>
-
-    </div>
-    <!-- 标签云 -->
-    <div th:if="${theme.config.sidebar.showTagCloud}">
-    
-      <th:block th:if="${theme.config.sidebar.showTagCloud}" th:replace="~{modules/sidebar/tag-cloud}"></th:block>
-      
-    </div>
- 
-  
-
-  
+<!--    <div th:text=" ${theme.config.sidebar.sidebarOrder}">-->
+<!--      dasg:-->
+<!--     -->
+<!--    </div>-->
+    <!-- 遍历自定义顺序配置 -->
+    <th:block th:with="orderList = ${theme.config.sidebar.sidebarOrder != null ? theme.config.sidebar.sidebarOrder : {'sponsor', 'authorCard', 'randomVideo', 'hotPosts', 'tagCloud'}}">
+      <th:block th:each="component : ${orderList}">
+        
+        <!-- 赞助者 -->
+        <div th:if="${component == 'sponsor' && theme.config.sponsor.showSponsor}">
+          <th:block th:replace="~{modules/sidebar/sponsor.html}"></th:block>
+        </div>
+        
+        <!-- 博主信息 -->
+        <div th:if="${component == 'authorCard' && theme.config.sidebar.showAuthorCard}">
+          <th:block th:replace="~{modules/sidebar/author-card}"></th:block>
+        </div>
+        
+        <!-- 随机视频 -->
+        <div th:if="${component == 'randomVideo' && theme.config.sidebar.showRandomVideo}">
+          <th:block th:replace="~{modules/sidebar/random-video}"></th:block>
+        </div>
+        
+        <!-- 热门文章 -->
+        <div th:if="${component == 'hotPosts' && theme.config.sidebar.showHotPosts}">
+          <th:block th:replace="~{modules/sidebar/hot-posts}"></th:block>
+        </div>
+        
+        <!-- 标签云 -->
+        <div th:if="${component == 'tagCloud' && theme.config.sidebar.showTagCloud}">
+          <th:block th:replace="~{modules/sidebar/tag-cloud}"></th:block>
+        </div>
+      </th:block>
+    </th:block>
   </div>
 </html>

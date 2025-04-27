@@ -4,29 +4,89 @@ metadata:
   name: theme-Ideaflow-setting
 spec:
   forms:
+    - group: sponsor
+      label: 赞助者信息
+      formSchema:
+        - $formkit: checkbox
+          name: showSponsor
+          label: 显示赞助
+          value: false
+          help: "设置是否在侧边栏显示赞助信息"
+        - $formkit: text
+          name: sponsorTitle
+          label: 赞助标题
+          value: "甜蜜赞助者"
+          help: "设置赞助区域的标题"
+        - $formkit: repeater
+          name: sponsorList
+          label: 赞助者列表
+          value: []
+          help: "设置赞助者列表，可添加多个赞助档位"
+          children:
+            - $formkit: text
+              name: name
+              label: 赞助档位名称
+              value: ""
+              help: "赞助档位名称，如：糖果小精灵"
+              validation: required
+            - $formkit: text
+              name: amount
+              label: 赞助金额
+              value: ""
+              help: "赞助金额范围，如：¥5-10"
+              validation: required
+            - $formkit: text
+              name: icon
+              label: 图标
+              value: "🍬"
+              help: "赞助档位对应的图标，如：🍬"
+            - $formkit: url
+              name: url
+              label: 跳转链接
+              value: ""
+              help: "点击赞助者名称后跳转的链接，为空时不跳转"
+        - $formkit: number
+          name: sponsorProgress
+          label: 赞助进度
+          value: 66
+          min: 0
+          max: 100
+          help: "设置赞助进度百分比，范围0-100"
+        - $formkit: text
+          name: sponsorButtonText
+          label: 赞助按钮文案
+          value: "成为甜心赞助商"
+          help: "设置赞助按钮上的文字"
+        - $formkit: url
+          name: sponsorButtonLink
+          label: 赞助链接
+          value: ""
+          help: "设置点击赞助按钮后跳转的链接"
+        - $formkit: textarea
+          name: sponsorDescription
+          label: 底部说明文字
+          value: "每笔赞助都会化作甜蜜能量\n助力我们创作更多美好内容✨"
+          help: "设置赞助区域底部的说明文字"
     - group: sidebar
       label: 侧边栏配置
       formSchema:
-        - $formkit: checkbox
-          name: showAuthorCard
-          label: 显示作者卡片
-          value: true
-          help: "设置是否显示作者信息卡片"
-        - $formkit: checkbox
-          name: showRandomVideo
-          label: 显示随机视频
-          value: true
-          help: "设置是否显示随机视频卡片"
-        - $formkit: checkbox
-          name: showHotPosts
-          label: 显示热门文章
-          value: true
-          help: "设置是否显示热门文章卡片"
-        - $formkit: checkbox
-          name: showTagCloud
-          label: 显示标签云
-          value: true
-          help: "设置是否显示标签云卡片"
+        - $formkit: select
+          name: sidebarOrder
+          label: 侧边栏显示顺序
+          help: "设置侧边栏各模块的显示顺序以及是否显示，拖动选项可调整顺序"
+          multiple: true
+          sortable: true
+          options:
+            - label: 赞助信息
+              value: sponsor
+            - label: 博主信息
+              value: authorCard
+            - label: 随机视频
+              value: randomVideo
+            - label: 热门文章
+              value: hotPosts
+            - label: 标签
+              value: tagCloud
     - group: common
       label: 公共配置
       formSchema:
