@@ -2,23 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <!-- 侧边栏容器 -->
   <div class="space-y-8">
-    <!--    &lt;!&ndash; 作者卡片 &ndash;&gt;-->
-    <th:block th:replace="~{modules/sidebar/author-card}"></th:block>
+    <!-- 作者卡片 -->
+    <div th:if="${theme.config.sidebar.showAuthorCard}">
+      <th:block  th:replace="~{modules/sidebar/author-card}"></th:block>
 
+    </div>
     <!-- 随机视频 -->
-    <th:block th:replace="~{modules/sidebar/random-video}"></th:block>
+    <div th:if="${theme.config.sidebar.showRandomVideo}">
+  
+      <th:block  th:replace="~{modules/sidebar/random-video}"></th:block>
 
-    <!-- 最新文章 -->
-    <th:block th:replace="~{modules/sidebar/hot-posts}"></th:block>
+    </div>
 
+    <div th:if="${theme.config.sidebar.showHotPosts}">
+      <!-- 最新文章 -->
+      <th:block  th:replace="~{modules/sidebar/hot-posts}"></th:block>
+
+    </div>
     <!-- 标签云 -->
-    <th:block th:replace="~{modules/sidebar/tag-cloud}"></th:block>
+    <div th:if="${theme.config.sidebar.showTagCloud}">
+    
+      <th:block th:if="${theme.config.sidebar.showTagCloud}" th:replace="~{modules/sidebar/tag-cloud}"></th:block>
+      
+    </div>
+ 
+  
 
-    <!--    &lt;!&ndash; 主题切换悬浮按钮 &ndash;&gt;-->
-    <!--    <div class="fixed bottom-10 right-10 z-[9999]">-->
-    <!--      &lt;!&ndash; 主题切换按钮容器 &ndash;&gt;-->
-    <!--      悬浮按钮sibar-->
-    <!--      <th:block th:replace="~{modules/common/theme-toggle}"></th:block>-->
-    <!--    </div>-->
+  
   </div>
 </html>

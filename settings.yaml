@@ -4,6 +4,29 @@ metadata:
   name: theme-Ideaflow-setting
 spec:
   forms:
+    - group: sidebar
+      label: 侧边栏配置
+      formSchema:
+        - $formkit: checkbox
+          name: showAuthorCard
+          label: 显示作者卡片
+          value: true
+          help: "设置是否显示作者信息卡片"
+        - $formkit: checkbox
+          name: showRandomVideo
+          label: 显示随机视频
+          value: true
+          help: "设置是否显示随机视频卡片"
+        - $formkit: checkbox
+          name: showHotPosts
+          label: 显示热门文章
+          value: true
+          help: "设置是否显示热门文章卡片"
+        - $formkit: checkbox
+          name: showTagCloud
+          label: 显示标签云
+          value: true
+          help: "设置是否显示标签云卡片"
     - group: common
       label: 公共配置
       formSchema:
