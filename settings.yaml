@@ -42,6 +42,21 @@ spec:
               label: 图片
               accepts:
                 - "image/*"
+        - $formkit: checkbox
+          name: isFullScreen
+          label: 头部大图or视频全屏
+          value: false
+          help: "设置头部大图or视频是否全屏显示"
+        - $formkit: checkbox
+          name: showStarryEffect
+          label: 显示星空效果
+          value: true
+          help: "设置是否显示星空特效"
+        - $formkit: checkbox
+          name: showRippleEffect
+          label: 显示波浪效果
+          value: true
+          help: "设置是否显示波浪特效"
     - group: footer
       label: 页脚配置
       formSchema:

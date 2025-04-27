@@ -2,7 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <!-- 大型头图背景组件 -->
 
-  <div th:fragment="img-background" class="relative h-[60vh] min-h-[400px] w-full overflow-hidden">
+  <div
+    th:fragment="img-background"
+    th:with="heightClass=${theme.config.common.isFullScreen ? 'h-[100vh] min-h-[100px]' : 'h-[60vh] min-h-[400px]'}"
+    th:class="|relative ${heightClass} overflow-hidden| w-full"
+  >
     <!-- 背景图片 -->
 
     <div
@@ -39,9 +43,12 @@
     </div>
 
     <!-- 插入星空效果 -->
-    <th:block th:replace="~{modules/common/starry}"></th:block>
-
+    <div th:if="${theme.config.common.showStarryEffect}">
+      <th:block th:replace="~{modules/common/starry}"></th:block>
+    </div>
     <!-- 插入波浪效果 -->
-    <th:block th:replace="~{modules/common/ripple}"></th:block>
+    <div th:if="${theme.config.common.showRippleEffect}">
+      <th:block th:replace="~{modules/common/ripple}"></th:block>
+    </div>
   </div>
 </html>
