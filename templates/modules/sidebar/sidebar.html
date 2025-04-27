@@ -11,27 +11,27 @@
       <th:block th:each="component : ${orderList}">
         
         <!-- 赞助者 -->
-        <div th:if="${component == 'sponsor' && theme.config.sponsor.showSponsor}">
+        <div th:if="${component == 'sponsor' }">
           <th:block th:replace="~{modules/sidebar/sponsor.html}"></th:block>
         </div>
         
         <!-- 博主信息 -->
-        <div th:if="${component == 'authorCard' && theme.config.sidebar.showAuthorCard}">
+        <div th:if="${component == 'authorCard' }">
           <th:block th:replace="~{modules/sidebar/author-card}"></th:block>
         </div>
         
         <!-- 随机视频 -->
-        <div th:if="${component == 'randomVideo' && theme.config.sidebar.showRandomVideo}">
+        <div th:if="${component == 'randomVideo' }">
           <th:block th:replace="~{modules/sidebar/random-video}"></th:block>
         </div>
         
         <!-- 热门文章 -->
-        <div th:if="${component == 'hotPosts' && theme.config.sidebar.showHotPosts}">
+        <div th:if="${component == 'hotPosts' }">
           <th:block th:replace="~{modules/sidebar/hot-posts}"></th:block>
         </div>
         
         <!-- 标签云 -->
-        <div th:if="${component == 'tagCloud' && theme.config.sidebar.showTagCloud}">
+        <div th:if="${component == 'tagCloud' }">
           <th:block th:replace="~{modules/sidebar/tag-cloud}"></th:block>
         </div>
       </th:block>
