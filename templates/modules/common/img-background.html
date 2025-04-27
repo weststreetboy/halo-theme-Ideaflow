@@ -4,8 +4,7 @@
 
   <div
     th:fragment="img-background"
-    th:with="heightClass=${theme.config.common.isFullScreen ? 'h-[100vh] min-h-[100px]' : 'h-[60vh] min-h-[400px]'}"
-    th:class="|relative ${heightClass} overflow-hidden| w-full"
+    th:class="${theme.config.common.isFullScreen ? 'relative overflow-hidden' : 'relative overflow-hidden'} h-[100vh] h-[60vh] min-h-[100vh] min-h-[400px] w-full w-full"
   >
     <!-- 背景图片 -->
 

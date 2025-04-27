@@ -18,7 +18,7 @@
       }
     }
   }"
-  class="profile-card relative mb-8 overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 hover:shadow-2xl dark:bg-gray-800 dark:shadow-gray-800/30"
+  class="profile-card relative mb-8 overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all duration-300 dark:bg-gray-800 dark:shadow-gray-800/30"
   style="max-width: 300px; margin: 2rem auto"
 >
   <!-- 毛玻璃背景效果 -->
@@ -46,7 +46,7 @@
 
     <!-- 视频播放区域 -->
     <div
-      class="group relative overflow-hidden"
+      class="relative overflow-hidden"
       :class="{ 'h-[400px] rounded-[2rem]': isPortrait, 'aspect-video rounded-xl': !isPortrait }"
     >
       <div class="absolute inset-0 flex items-center justify-center">
@@ -64,7 +64,7 @@
         <!-- 切换按钮 -->
         <button
           @click="nextVideo"
-          class="transform rounded-full bg-black/50 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/70 focus:outline-none active:scale-95 group-hover:opacity-100"
+          class="transform rounded-full bg-black/50 p-2.5 text-white opacity-100 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-black/70 focus:outline-none active:scale-95"
           :disabled="isLoading"
         >
           <svg
