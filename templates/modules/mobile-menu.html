@@ -16,7 +16,7 @@
     x-transition:leave="transition-opacity ease-linear duration-300"
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm"
     @click="$store.mobileMenu.isOpen = false"
   ></div>
 
@@ -29,25 +29,23 @@
     x-transition:leave="transition ease-in-out duration-300 transform"
     x-transition:leave-start="translate-x-0"
     x-transition:leave-end="-translate-x-full"
-    class="fixed inset-y-0 left-0 w-1/2 h-[100vh] min-h-[100vh] bg-white/90 shadow-lg backdrop-blur-lg dark:bg-gray-800/90 [&_.text-shadow]:drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]"
-    th:style="${theme.config.common.mobileSidebarBgImage != null} ? 'background-image: url(' + ${theme.config.common.mobileSidebarBgImage} + '); background-size: cover; background-position: center;' : ''"
+    class="fixed inset-y-0 left-0 w-3/4 h-[100vh] min-h-[100vh] bg-white/95 shadow-xl backdrop-blur-md dark:bg-gray-800/95"
+    th:style="${theme.config.common.mobileSidebarBgImage != null} ? 'background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(' + ${theme.config.common.mobileSidebarBgImage} + '); background-size: cover; background-position: center;' : ''"
   >
-  
-
     <div class="relative flex h-full flex-col">
       <!-- 菜单头部 -->
-      <div class="flex h-14 items-center justify-between border-b border-gray-100/10 px-4 dark:border-gray-700/30">
+      <div class="flex h-16 items-center justify-between border-b border-gray-100/20 px-4 dark:border-gray-700/40">
         <div class="flex items-center">
           <img
             th:src="${site.logo}"
             alt="网站Logo"
-            class="h-8 w-8 rounded-full object-cover shadow-lg ring-2 ring-white/50 dark:shadow-gray-700 dark:ring-gray-800/50"
+            class="h-10 w-10 rounded-full object-cover shadow-lg ring-2 ring-white/60 dark:shadow-gray-700 dark:ring-gray-800/60"
           />
-          <span class="ml-3 text-xl tracking-tight text-text-base text-white font-semibold text-shadow" th:text="${site.title}"></span>
+          <span class="ml-3 text-xl font-bold text-white drop-shadow-lg" th:text="${site.title}"></span>
         </div>
         <button
           @click="$store.mobileMenu.isOpen = false"
-          class="rounded-full p-1 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
+          class="rounded-full p-2 text-white hover:bg-white/10 transition-colors duration-200"
         >
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -56,8 +54,8 @@
       </div>
 
       <!-- 菜单内容 -->
-      <div class="flex-1 overflow-y-auto py-4">
-        <div class="space-y-1 px-2">
+      <div class="flex-1 overflow-y-auto py-6">
+        <div class="space-y-2 px-4">
           <div
             th:each="menuItem : ${menuFinder.getPrimary().menuItems}"
             class="relative"
@@ -67,7 +65,7 @@
             <button
               th:if="${not #lists.isEmpty(menuItem.children)}"
               @click="open = !open"
-              class="flex w-full items-center justify-between rounded-lg px-3 py-2 text-base text-white font-medium text-shadow  "
+              class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-base font-medium text-white hover:bg-white/10 transition-colors duration-200"
             >
               <span th:text="${menuItem.status.displayName}"></span>
               <svg
@@ -86,7 +84,7 @@
               th:href="${menuItem.status.href}"
               th:text="${menuItem.status.displayName}"
               th:target="${menuItem.spec.target?.value}"
-              class="block w-full rounded-lg px-3 py-2 text-base text-white font-medium text-shadow  "
+              class="block w-full rounded-lg px-4 py-3 text-base font-medium text-white hover:bg-white/10 transition-colors duration-200"
             ></a>
 
             <!-- 子菜单 -->
@@ -99,42 +97,19 @@
               x-transition:leave="transition ease-in duration-75"
               x-transition:leave-start="opacity-100 transform scale-100"
               x-transition:leave-end="opacity-0 transform scale-95"
-              class="ml-4 mt-1 space-y-1"
+              class="ml-4 mt-2 space-y-2"
             >
               <a
                 th:each="subMenuItem : ${menuItem.children}"
                 th:href="${subMenuItem.status.href}"
                 th:text="${subMenuItem.status.displayName}"
                 th:target="${menuItem.spec.target?.value}"
-                class="block rounded-lg px-3 py-2 text-sm text-white font-medium text-shadow  "
+                class="block rounded-lg px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10 transition-colors duration-200"
               ></a>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- 菜单底部 -->
-<!--      <div class="border-t border-gray-100/10 p-4 dark:border-gray-700/30">-->
-<!--        <div class="flex items-center justify-between">-->
-<!--   -->
-<!--          -->
-<!--          &lt;!&ndash; 用户信息 &ndash;&gt;-->
-<!--          <div-->
-<!--            th:with="currentUser = ${contributorFinder.getContributor(#authentication.name)}"-->
-<!--            class="flex items-center space-x-2"-->
-<!--          >-->
-<!--            <img-->
-<!--              class="h-8 w-8 rounded-full object-cover shadow-lg ring-2 ring-white/30 dark:ring-gray-700/30"-->
-<!--              th:src="${currentUser.avatar ?: '/themes/theme-Ideaflow/assets/img/default-avatar.png'}"-->
-<!--              th:alt="${currentUser.displayName}"-->
-<!--            />-->
-<!--            <span class="text-sm text-gray-700 dark:text-gray-200" th:text="${currentUser.displayName}"></span>-->
-<!--          </div>-->
-
-<!--          &lt;!&ndash; 主题切换 &ndash;&gt;-->
-<!--          <th:block th:replace="~{modules/common/theme-switch}"></th:block>-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
   </div>
 </div>

@@ -240,6 +240,11 @@ spec:
           label: 备案链接
           value: ""
           help: "设置备案信息链接"
+        - $formkit: checkbox
+          name: useHaloFooterOnly
+          label: 仅使用Halo页脚
+          value: false
+          help: "设置是否仅使用Halo的页脚代码注入功能，启用后将不显示主题自带的页脚样式"
 
     - group: blogger
       label: 博主信息

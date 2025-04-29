@@ -24,10 +24,10 @@
       />
     </div>
   </div>
-
-  <halo:footer />
   <!-- 底部内容区域 -->
-  <footer class="border-gray-200/50 bg-base-100 py-8 backdrop-blur-md transition-colors">
+  <halo:footer />
+
+  <footer th:unless="${theme.config.footer.useHaloFooterOnly}" class="border-gray-200/50 bg-base-100 py-8 backdrop-blur-md transition-colors">
     <!-- 个性化标语 -->
     <div th:if="${theme.config.footer.footerSlogan}" class="animate-fade-in mb-1 text-center">
       <p
