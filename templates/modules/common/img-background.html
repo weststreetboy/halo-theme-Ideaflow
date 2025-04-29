@@ -1,51 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <!-- 大型头图背景组件 -->
+  
 
-  <div
-    th:fragment="img-background"
-    th:class="${theme.config.common.isFullScreen ? 'h-[100vh] min-h-[100vh] relative w-full   overflow-hidden ' : 'h-[60vh]  min-h-[400px] relative w-full   overflow-hidden'} " >
-    <!-- 背景图片  -->
-    <div
-      class="absolute inset-0 flex items-center justify-center bg-cover bg-center bg-no-repeat transition-transform duration-1000"
-    >
-      <div class="h-full w-full object-cover">
-        <!-- 视频背景 -->
-        <video
-          th:if="${not #lists.isEmpty(theme.config.common.backgroundVideos)}"
-          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundVideos))}"
-          th:src="${theme.config.common.backgroundVideos[randomIndex].url}"
-          class="h-full w-full object-cover"
-          autoplay
-          loop
-          muted
-          playsinline
-        ></video>
-        <!-- 图片背景 -->
-        <img
-          th:if="${#lists.isEmpty(theme.config.common.backgroundVideos) and not #lists.isEmpty(theme.config.common.backgroundImgs)}"
-          th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
-          th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
-          class="h-full w-full object-cover"
-        />
-        <img
-          th:unless="${not #lists.isEmpty(theme.config.common.backgroundVideos) or not #lists.isEmpty(theme.config.common.backgroundImgs)}"
-          th:src="@{/assets/img/imbg.avif}"
-          class="h-full w-full object-cover"
-        />
-      </div>
-
-      <!-- 暗黑模式遮罩层 -->
-      <div class="bg-black/1 absolute inset-0 transition-opacity duration-300 dark:bg-black/40"></div>
-    </div>
-
-    <!-- 插入星空效果 -->
-    <div th:if="${theme.config.common.showStarryEffect}">
-      <th:block th:replace="~{modules/common/starry}"></th:block>
-    </div>
-    <!-- 插入波浪效果 -->
-    <div th:if="${theme.config.common.showRippleEffect}">
-      <th:block th:replace="~{modules/common/ripple}"></th:block>
-    </div>
+  <!-- 移动端独占 -->
+  <div class="md:hidden">
+    <th:block th:replace="~{modules/common/img-background-mobile.html}"></th:block>
   </div>
+
+  <!-- 桌面端独占 -->
+  <div class="hidden md:block">
+    <th:block th:replace="~{modules/common/img-background-web.html}"></th:block>
+  </div>
+
 </html>

@@ -99,11 +99,25 @@ spec:
             - "image/*"
         - $formkit: repeater
           name: backgroundVideos
-          label: 背景视频
+          label: PC端背景视频
           value: []
           max: 5
           min: 0
-          help: "设置背景视频，优先于背景图片显示"
+          help: "设置PC端背景视频，优先于背景图片显示"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: 视频
+              accepts:
+                - "video/*"
+        - $formkit: repeater
+          name: mobileBackgroundVideos
+          label: 移动端背景视频
+          value: []
+          max: 5
+          min: 0
+          help: "设置移动端背景视频，优先于背景图片显示"
           children:
             - $formkit: attachment
               name: url
@@ -113,11 +127,25 @@ spec:
                 - "video/*"
         - $formkit: repeater
           name: backgroundImgs
-          label: 背景大图
+          label: PC端背景大图
           value: []
           max: 5
           min: 1
-          help: "当没有配置视频时显示背景图片"
+          help: "当没有配置视频时显示PC端背景图片"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: 图片
+              accepts:
+                - "image/*"
+        - $formkit: repeater
+          name: mobileBackgroundImgs
+          label: 手机端背景大图
+          value: [ ]
+          max: 5
+          min: 1
+          help: "当没有配置手机端视频时显示手机端端背景图片"
           children:
             - $formkit: attachment
               name: url
@@ -131,6 +159,11 @@ spec:
           value: false
           help: "设置头部大图or视频是否全屏显示"
         - $formkit: checkbox
+          name: isFullScreenMobile
+          label: 移动端头部大图or视频全屏
+          value: false
+          help: "设置移动端头部大图or视频是否全屏显示"
+        - $formkit: checkbox
           name: showStarryEffect
           label: 显示星空效果
           value: true
@@ -140,6 +173,13 @@ spec:
           label: 显示波浪效果
           value: true
           help: "设置是否显示波浪特效"
+        - $formkit: text
+          name: mobileSidebarBgImage
+          label: 移动端菜单栏背景图
+          value: ""
+          help: "设置移动端菜单栏的背景图片，不设置则使用主题默认背景色,目前只支持完整格式的图片地址"
+          accepts:
+            - "image/*"
     - group: footer
       label: 页脚配置
       formSchema:

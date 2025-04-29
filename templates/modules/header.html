@@ -22,6 +22,18 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
+    <!-- 添加Alpine.js store -->
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.store('mobileMenu', {
+          isOpen: false,
+          toggle() {
+            this.isOpen = !this.isOpen;
+          }
+        });
+      });
+    </script>
+
     <nav class="mx-auto">
       <div class="flex h-14 items-center justify-between">
         <div class="flex pl-4">
@@ -36,6 +48,15 @@
             </a>
           </div>
 
+          <!-- 移动端菜单按钮 -->
+          <button
+            @click="$store.mobileMenu.toggle()"
+            class="ml-4 rounded-md p-1 text-gray-600 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 sm:hidden"
+          >
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
 
           <!-- Desktop Menu -->
           <div class="ml-8 hidden sm:flex sm:space-x-2">
@@ -49,7 +70,7 @@
               <a
                 th:href="${menuItem.status.href}"
                 th:text="${menuItem.status.displayName}"
-                th:target="${menuItem.spec.target}"
+                th:target="${menuItem.spec.target?.value}"
                 class="relative inline-flex items-center px-3 py-2 text-base text-gray-600 transition-all duration-200 after:absolute after:bottom-0 after:left-1/2 after:right-1/2 after:h-0.5 after:bg-gradient-to-r after:from-transparent after:via-primary after:to-transparent after:transition-all after:duration-300 hover:scale-105 hover:text-gray-800 hover:after:left-0 hover:after:right-0 dark:text-gray-200 dark:hover:text-white"
               ></a>
               <!-- 子菜单 -->
@@ -70,7 +91,7 @@
                     th:each="subMenuItem : ${menuItem.children}"
                     th:href="${subMenuItem.status.href}"
                     th:text="${subMenuItem.status.displayName}"
-                    th:target="${subMenuItem.spec.target}"
+                    th:target="${menuItem.spec.target?.value}"
                     class="block px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100/50 dark:text-gray-200 dark:hover:bg-gray-700/50"
                   ></a>
                 </div>
@@ -195,4 +216,7 @@
       </div>
     </nav>
   </header>
+
+  <!-- 引入移动端菜单模块 -->
+  <th:block th:replace="~{modules/mobile-menu}"></th:block>
 </html>
