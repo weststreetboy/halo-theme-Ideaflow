@@ -1,22 +1,41 @@
+<!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content})}">
-  <th:block th:fragment="content">
-    <!-- Header -->
-    <th:block th:replace="~{modules/header}"></th:block>
+<th:block th:fragment="content">
+  <!-- Header -->
+  <th:block th:replace="~{modules/header.html}"></th:block>
 
-    <th:block th:fragment="content"> 测试自定义page页面1 </th:block>
+  <!-- 大型头图区域 -->
+  <th:block th:replace="~{modules/common/post-img-background.html}"></th:block>
 
-    <!-- 主题切换悬浮按钮 -->
-    <div class="fixed bottom-4 right-4 z-[9999] block">
-      <!-- 主题切换按钮容器 -->
-      悬浮按钮page
-      <th:block th:replace="~{modules/common/theme-toggle}"></th:block>
+  <div class="relative mx-auto flex w-full justify-center bg-base-100 px-4 md:px-6">
+    <!-- 左侧边栏区域 - 在手机端隐藏，平板和桌面端显示 -->
+    <div class="sticky top-24 hidden h-[calc(100vh-6rem)] w-[10%] overflow-y-auto lg:block">
+      <!--      左边-->
+      <!--        左边目录区域1-->
     </div>
 
-    <!-- 插入星空效果 -->
-    <th:block th:replace="~{modules/common/starry}"></th:block>
-  
-  </th:block>
+    <!-- 文章内容区域 - 在手机端占满宽度，添加适当间距 -->
+    <div class="flex w-full max-w-[1920px] flex-col md:w-[80%] lg:w-[70%]">
+      <div>
+        <article id="articleContentId" class="article-content text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+          <th:block th:utext="${singlePage.content.content}"></th:block>
+        </article>
+      </div>
 
+      <halo:comment
+        group="content.halo.run"
+        kind="SinglePage"
+        th:attr="name=${singlePage.metadata.name}"
+        colorScheme="window.main.currentColorScheme"
+      />
+    </div>
 
+ 
+  </div>
+
+ 
+  <!-- Footer -->
+  <th:block th:replace="~{modules/footer.html}"></th:block>
+</th:block>
 
 </html>

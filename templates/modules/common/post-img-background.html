@@ -9,12 +9,12 @@
     >
       <div class="h-full w-full object-cover">
         <img
-          th:if="${post != null && post.spec.cover != null}"
+          th:if="${post != null && post.spec.cover != null && post.spec.cover != ''}"
           th:src="${post.spec.cover}"
           class="h-full w-full object-cover"
         />
         <img
-          th:unless="${post != null && post.spec.cover != null}"
+          th:unless="${post != null && post.spec.cover != null && post.spec.cover != ''}"
           th:if="${not #lists.isEmpty(theme.config.common.backgroundImgs)}"
           th:with="randomIndex=${T(java.lang.Math).floor(T(java.lang.Math).random() * #lists.size(theme.config.common.backgroundImgs))}"
           th:src="${theme.config.common.backgroundImgs[randomIndex].url}"
