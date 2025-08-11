@@ -41,7 +41,10 @@
 
 
 ✨ 温馨提示：
+
+<p><strong>  感谢您的赞助，可以备注留下您的邮箱或者 GitHub 账户哈~ 如果您有特别需要帮助的地方，可以直接通过邮箱联系我，我会尽快回复的~</strong></p>
+
 1. 赞助将用于服务器维护、域名续费等基础运营（不用很多，小小心意就够啦~）
 2. 赞助者提出的需求/建议将获得**最高优先级**实现
-3. 赞助者信息将展示在：[示例网站](https://halo.ideaflow.top/) 和 [GitHub仓库](https://github.com/Idea-flow/theme-Ideaflow) 的荣誉墙,有第一位赞助了,再开发,偷个懒~ 哈哈
+3. 赞助者信息将展示在：[示例网站](https://halo.ideaflow.top/) 和 [GitHub仓库](https://github.com/Idea-flow/theme-Ideaflow) 的荣誉墙, 哈哈
 4. 感谢各位俊男靓女的支持！ღ( ´･ᴗ･` ) 
