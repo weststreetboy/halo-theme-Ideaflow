@@ -1,0 +1,305 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-Ideaflow-setting
+spec:
+  forms:
+    - group: sponsor
+      label: Sponsor/Donation Information
+      formSchema:
+        - $formkit: checkbox
+          name: showSponsor
+          label: "Show Sponsor"
+          value: false
+          help: "Show sponsor in sidebar"
+        - $formkit: text
+          name: sponsorTitle
+          label: Sponsor 
+          value: "Sponsor Title"
+          help: "Sponsor Title (ie. Paypal, Alipay, Patreon, etc.)"
+        - $formkit: repeater
+          name: sponsorList
+          label: Sponsor list
+          value: []
+          help: "List if have multiple sponsor"
+          children:
+            - $formkit: text
+              name: name
+              label: Name
+              value: ""
+              help: "Sponsor ie：Paypal, Alipay, Patreon"
+              validation: required
+            - $formkit: text
+              name: amount
+              label: Amount
+              value: ""
+              help: "Amount of donate，ie：¥5-10"
+              validation: required
+            - $formkit: text
+              name: icon
+              label: Icon
+              value: "🍬"
+              help: "Icon used for sponsor/donation. Emoji supports. ie: 🍬"
+            - $formkit: url
+              name: url
+              label: Donation link
+              value: ""
+              help: "Link for redirecting sponsor/donation site"
+        - $formkit: number
+          name: sponsorProgress
+          label: Target
+          value: 66
+          min: 0
+          max: 100
+          help: "Sponsor/donation progress. range 0-100"
+        - $formkit: text
+          name: sponsorButtonText
+          label: Sponsor Label
+          value: "Become a sponsor"
+          help: "Set label for sponsor button"
+        - $formkit: url
+          name: sponsorButtonLink
+          label: Sponsor Link
+          value: ""
+          help: "URL sponsor page"
+        - $formkit: textarea
+          name: sponsorDescription
+          label: Description sponsor
+          value: "Every donation make this blog alive\n✨"
+          help: "Description sponsor"
+    - group: sidebar
+      label: Sidebar
+      formSchema:
+        - $formkit: select
+          name: sidebarOrder
+          label: Sidebar display order
+          help: "Set diplay sidebar order. Drag for adjust order."
+          multiple: true
+          sortable: true
+          options:
+            - label: Donation/Sponsor
+              value: sponsor
+            - label: Author
+              value: authorCard
+            - label: Video
+              value: randomVideo
+            - label: Trending Post
+              value: hotPosts
+            - label: Tag
+              value: tagCloud
+    - group: common
+      label: Website configuration
+      formSchema:
+        - $formkit: attachment
+          name: favicon
+          label: Favicon
+          value: ""
+          help: "Set icon site, .ico extension recomended"
+          accepts:
+            - "image/*"
+        - $formkit: repeater
+          name: backgroundVideos
+          label: Desktop video show
+          value: []
+          max: 5
+          min: 0
+          help: "Play video background"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: Video
+              accepts:
+                - "video/*"
+        - $formkit: repeater
+          name: mobileBackgroundVideos
+          label: Mobile vide show
+          value: []
+          max: 5
+          min: 0
+          help: "Play video background"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: Video
+              accepts:
+                - "video/*"
+        - $formkit: repeater
+          name: backgroundImgs
+          label: Desktop image
+          value: []
+          max: 5
+          min: 1
+          help: "Display image in desktop version"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: Image
+              accepts:
+                - "image/*"
+        - $formkit: repeater
+          name: mobileBackgroundImgs
+          label: Mobile image
+          value: [ ]
+          max: 5
+          min: 1
+          help: "Display image mobile version"
+          children:
+            - $formkit: attachment
+              name: url
+              id: url
+              label: Image
+              accepts:
+                - "image/*"
+        - $formkit: checkbox
+          name: isFullScreen
+          label: Fullscreen image desktop
+          value: false
+          help: "Show image in fullscreen"
+        - $formkit: checkbox
+          name: isFullScreenMobile
+          label: Fullscreen image mobile
+          value: false
+          help: "Show image in fullscreen"
+        - $formkit: checkbox
+          name: showStarryEffect
+          label: Enable sky effect
+          value: true
+          help: "Show sky effect in image header"
+        - $formkit: checkbox
+          name: showRippleEffect
+          label: Enable wave effect
+          value: true
+          help: "Show wave effect in image header"
+        - $formkit: checkbox
+          name: videoAutoPlay
+          label: Video autoplay
+          value: true
+          help: "Enable video autoplay"
+        - $formkit: text
+          name: mobileSidebarBgImage
+          label: Sidebar image (mobile version)
+          value: ""
+          help: "Enable sidebar image, if not enable. Default background theme applied"
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: defaultAvatar
+          label: Avatar
+          value: ""
+          help: "Set avatar in header"
+          accepts:
+            - "image/*"
+    - group: footer
+      label: Footer
+      formSchema:
+        - $formkit: attachment
+          name: footerAnimalImage
+          label: Floating footer image
+          value: ""
+          help: "Set footer floating animation"
+          accepts:
+            - "image/*"
+        - $formkit: checkbox
+          name: showFooterAnimalImageOnMobile
+          label: Display floating image on mobile
+          value: false
+          help: "Show animation image in footer"
+       
+        - $formkit: text
+          name: footerSlogan
+          label: Slogan
+          value: ""
+          help: "Display footer quote"
+        - $formkit: text
+          name: contactEmail
+          label: Email contact
+          value: ""
+          help: "Set email contact address"
+        - $formkit: text
+          name: contactText
+          label: Label contact
+          value: "Contact me"
+          help: "Custom label contact"
+        - $formkit: text
+          name: supportText
+          label: Donation text
+          value: ""
+          help: "Set donation information"
+        - $formkit: url
+          name: supportLink
+          label: Donation url
+          value: ""
+          help: "Set donation url"
+        - $formkit: text
+          name: icp
+          label: ICP Registration Number
+          value: ""
+          help: "Set ICP registration number"
+        - $formkit: url
+          name: icpLink
+          label: ICP url
+          value: ""
+          help: "ICP informtion link"
+        - $formkit: text
+          name: ga
+          label: GA Registration Number
+          value: ""
+          help: "set GA Registration Number"
+        - $formkit: url
+          name: gaLink
+          label: GA url
+          value: ""
+          help: "GA informtion link"
+        - $formkit: checkbox
+          name: useHaloFooterOnly
+          label: Halo Footer Only
+          value: false
+          help: "Set Halo footer only. If enabled, only Halo show in footer"
+
+    - group: blogger
+      label: Blog Information
+      formSchema:
+        - $formkit: attachment
+          name: avatar
+          label: Avatar
+          value: ""
+          help: "Set avatar, max 200x200px"
+        - $formkit: text
+          name: nickname
+          label: Author
+          value: ""
+          help: "Set default author in default title post"
+        - $formkit: text
+          name: bio
+          label: Bio
+          value: ""
+          help: "About me"
+        - $formkit: text
+          name: location
+          label: Location
+          value: ""
+          help: "Location, ie: Jakarta"
+        - $formkit: repeater
+          name: social_links
+          label: Social Media Links
+          id: social_links
+          value: []
+          children:
+            - $formkit: text
+              name: platform
+              label: Platform
+              value: ""
+              validation: required
+            - $formkit: url
+              name: url
+              label: Link
+              value: ""
+              validation: required
+            - $formkit: text
+              name: icon
+              label: Icon
+              value: ""
+              help: "Using SVG extension icon"
