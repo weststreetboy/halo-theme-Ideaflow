@@ -198,8 +198,8 @@ spec:
         - $formkit: attachment
           name: footerAnimalImage
           label: 页脚动物装饰图
-          value: ""
-          help: "设置页脚动物装饰图片"
+          value: "/themes/theme-Ideaflow/assets/img/animals.webp"
+          help: "设置页脚动物装饰图片,(如何有需要填写以下地址或者上传图片:/themes/theme-Ideaflow/assets/img/animals.webp)"
           accepts:
             - "image/*"
         - $formkit: checkbox
