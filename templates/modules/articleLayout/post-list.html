@@ -6,9 +6,15 @@
     <!-- 左侧图片 (偶数索引) -->
     <div
       th:if="${postStat.index % 2 == 0}"
-      class="relative z-10 hidden min-w-[45%] scale-100 transform bg-cover bg-center bg-no-repeat transition-all duration-500 hover:scale-125 sm:block"
-      th:style="|clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%); background-image: url(${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover})|"
-    ></div>
+      class="relative z-10 hidden min-w-[45%] scale-100 transform transition-all duration-500 hover:scale-125 sm:block"
+      style="clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);"
+    >
+      <img 
+        th:src="${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover}" 
+        th:alt="${post.spec.title}" 
+        class="h-full w-full object-cover"
+      >
+    </div>
 
     <!-- 文章信息区域 -->
     <div class="relative z-20 w-full px-5 py-5 sm:w-[65%] sm:px-10 lg:px-5 xl:px-10">
@@ -70,15 +76,26 @@
     <!-- 模糊背景 -->
     <div
       class="absolute h-60 w-full bg-cover bg-center brightness-[0.8] sm:blur-[2.5rem] sm:brightness-[0.6] dark:brightness-[0.5]"
-      th:style="|background-image: url(${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover})|"
-    ></div>
+      
+    >
+
+      <img th:src="${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover}" th:alt="${post.spec.title}">
+    </div>
 
     <!-- 右侧图片 (奇数索引) -->
     <div
       th:if="${postStat.index % 2 != 0}"
       class="relative z-10 hidden min-w-[45%] scale-100 transform bg-cover bg-center bg-no-repeat transition-all duration-500 hover:scale-125 sm:block"
-      th:style="|clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%); background-image: url(${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover})|"
-    ></div>
+      style="clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%); "
+    >
+
+      <img
+        th:src="${#strings.isEmpty(post.spec.cover) ? '/themes/theme-Ideaflow/assets/img/article-avatar.png' : post.spec.cover}"
+        th:alt="${post.spec.title}"
+        class="h-full w-full object-cover"
+      >
+      
+    </div>
   </article>
 
   <!-- 空状态展示 -->
