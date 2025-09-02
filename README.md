@@ -21,22 +21,6 @@
 ![image.png](/images/78c8b104e069eb3115f09a4b39b23237.webp)
 
 
-# 赞助 
-请ideaflow吃一个苹果，ideaflow把你记在咱的感谢小本本上~
-
-<table align="center">
-  <tr>
-    <td align="center">
-      <img src="/images/wx.png" alt="微信赞助" width="200"/><br/>
-      <sub>微信赞助</sub>
-    </td>
-    <td width="50"></td> <!-- 添加间距 -->
-    <td align="center">
-      <img src="/images/zfb.png" alt="支付宝赞助" width="200"/><br/>
-      <sub>支付宝赞助</sub>
-    </td>
-  </tr>
-</table>
 
 
 
