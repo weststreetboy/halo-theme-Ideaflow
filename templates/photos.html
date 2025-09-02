@@ -1,5 +1,10 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{modules/layout :: html(content = ~{::content})}">
   <th:block th:fragment="content">
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Header -->
     <th:block th:replace="~{modules/header :: header(isOverlayPage=false)}"></th:block>
 
@@ -15,149 +20,474 @@
           </p>
         </div>
 
-        <!-- 分类标签按钮 -->
+        <!-- 相册数据初始化 -->
         <script th:inline="javascript">
-          const allPhotos = /*[[${groups}]]*/ [];
-        </script>
-        <div
-          x-data="{
-          selectedGroup: 'all',
-          allPhotos: allPhotos,
-          get filteredPhotos() {
-            if (this.selectedGroup === 'all') {
-              return this.allPhotos.flatMap(group => group.photos);
+          // 从后端获取相册数据，实际使用时由服务器渲染
+          const allAlbums = /*[[${albums}]]*/ [
+            {
+              "metadata": { "name": "album-1" },
+              "spec": { 
+                "displayName": "家庭聚会", 
+                "description": "2023年春节家庭合影" 
+              },
+              "coverUrl": "/assets/albums/family-cover.jpg",
+              "photos": [
+                {
+                  "metadata": { "name": "photo-1" },
+                  "spec": { 
+                    "url": "/assets/photos/family-dinner.jpg", 
+                    "displayName": "年夜饭" 
+                  },
+                  "people": ["爸爸", "妈妈", "我", "妹妹"],
+                  "location": {
+                    "name": "家中",
+                    "address": "北京市朝阳区幸福路88号"
+                  },
+                  "tags": ["家庭", "晚餐", "春节"],
+                  "takenTime": "2023-01-21 18:30:00"
+                },
+                {
+                  "metadata": { "name": "photo-2" },
+                  "spec": { 
+                    "url": "/assets/photos/family-game.jpg", 
+                    "displayName": "家庭游戏时间" 
+                  },
+                  "people": ["爸爸", "妈妈", "妹妹"],
+                  "location": {
+                    "name": "家中",
+                    "address": "北京市朝阳区幸福路88号"
+                  },
+                  "tags": ["家庭", "游戏", "欢乐"],
+                  "takenTime": "2023-01-22 15:10:00"
+                }
+              ]
+            },
+            {
+              "metadata": { "name": "album-2" },
+              "spec": { 
+                "displayName": "三亚旅行", 
+                "description": "2023年夏天海边度假" 
+              },
+              "coverUrl": "/assets/albums/sanya-cover.jpg",
+              "photos": [
+                {
+                  "metadata": { "name": "photo-3" },
+                  "spec": { 
+                    "url": "/assets/photos/beach-sunset.jpg", 
+                    "displayName": "海滩日落" 
+                  },
+                  "people": ["我", "朋友小李"],
+                  "location": {
+                    "name": "亚龙湾",
+                    "address": "海南省三亚市亚龙湾度假区"
+                  },
+                  "tags": ["旅行", "海滩", "日落"],
+                  "takenTime": "2023-07-15 18:45:00"
+                },
+                {
+                  "metadata": { "name": "photo-4" },
+                  "spec": { 
+                    "url": "/assets/photos/seafood.jpg", 
+                    "displayName": "海鲜大餐" 
+                  },
+                  "people": ["我", "朋友小李", "朋友小王"],
+                  "location": {
+                    "name": "海鲜广场",
+                    "address": "海南省三亚市海棠区"
+                  },
+                  "tags": ["美食", "海鲜", "旅行"],
+                  "takenTime": "2023-07-16 19:20:00"
+                }
+              ]
             }
-            const group = this.allPhotos.find(g => g.metadata.name === this.selectedGroup);
-            return group ? group.photos : [];
+          ];
+        </script>
+        
+        <!-- 主功能区 -->
+        <div x-data="{
+          selectedAlbum: null,      // 当前选中的文件夹
+          selectedPhoto: null,      // 当前选中的照片（用于详情查看）
+          filterType: 'all',        // 筛选类型：all, person, location, tag
+          filterValue: null,        // 筛选值
+          allAlbums: allAlbums,
+          
+          // 获取当前选中文件夹的所有照片
+          get currentAlbumPhotos() {
+            if (!this.selectedAlbum) return [];
+            return this.allAlbums.find(album => album.metadata.name === this.selectedAlbum)?.photos || [];
+          },
+          
+          // 获取筛选后的照片
+          get filteredPhotos() {
+            let photos = this.currentAlbumPhotos;
+            
+            if (this.filterType === 'person' && this.filterValue) {
+              return photos.filter(photo => 
+                photo.people && photo.people.includes(this.filterValue)
+              );
+            }
+            
+            if (this.filterType === 'location' && this.filterValue) {
+              return photos.filter(photo => 
+                photo.location && photo.location.name === this.filterValue
+              );
+            }
+            
+            if (this.filterType === 'tag' && this.filterValue) {
+              return photos.filter(photo => 
+                photo.tags && photo.tags.includes(this.filterValue)
+              );
+            }
+            
+            return photos;
+          },
+          
+          // 获取所有人物（用于筛选）
+          get allPeople() {
+            const peopleSet = new Set();
+            this.currentAlbumPhotos.forEach(photo => {
+              if (photo.people) {
+                photo.people.forEach(person => peopleSet.add(person));
+              }
+            });
+            return Array.from(peopleSet);
+          },
+          
+          // 获取所有位置（用于筛选）
+          get allLocations() {
+            const locationsSet = new Set();
+            this.currentAlbumPhotos.forEach(photo => {
+              if (photo.location) {
+                locationsSet.add(photo.location.name);
+              }
+            });
+            return Array.from(locationsSet);
+          },
+          
+          // 获取所有标签（用于筛选）
+          get allTags() {
+            const tagsSet = new Set();
+            this.currentAlbumPhotos.forEach(photo => {
+              if (photo.tags) {
+                photo.tags.forEach(tag => tagsSet.add(tag));
+              }
+            });
+            return Array.from(tagsSet);
+          },
+          
+          // 重置筛选条件
+          resetFilters() {
+            this.filterType = 'all';
+            this.filterValue = null;
           }
-        }"
-        >
-          <div class="mb-12 flex flex-wrap justify-center gap-3">
-            <button
-              @click="selectedGroup = 'all'"
-              :class="selectedGroup === 'all' ? 'bg-gradient-to-r from-green-300 to-blue-300 dark:from-green-500 dark:to-blue-500' : 'bg-gradient-to-r from-green-200 to-blue-200 dark:from-green-600 dark:to-blue-600'"
-              class="rounded-full px-6 py-2 text-sm font-medium text-gray-800 transition-all duration-300 hover:scale-105 dark:text-gray-200"
-            >
-              全部
-            </button>
-            <template x-for="group in allPhotos" :key="group.metadata.name">
-              <button
-                @click="selectedGroup = group.metadata.name"
-                :class="selectedGroup === group.metadata.name ? 'bg-gradient-to-r from-green-300 to-blue-300 dark:from-green-500 dark:to-blue-500' : 'bg-gradient-to-r from-green-200 to-blue-200 dark:from-green-600 dark:to-blue-600'"
-                class="rounded-full px-6 py-2 text-sm font-medium text-gray-800 transition-all duration-300 hover:scale-105 dark:text-gray-200"
-                x-text="group.spec.displayName"
-              ></button>
-            </template>
-          </div>
-
-          <div
-            x-show="selectedGroup === 'all'"
-            x-transition:enter="transition ease-out duration-400"
-            x-transition:enter-start="opacity-0 transform translate-x-[-20px]"
-            x-transition:enter-end="opacity-100 transform translate-x-0"
-            x-transition:leave="transition ease-in-out duration-400"
-            x-transition:leave-start="opacity-100 transform translate-y-0"
-            x-transition:leave-end="opacity-0 transform translate-y-2"
-          >
+        }">
+          <!-- 相册文件夹视图 -->
+          <div x-show="!selectedAlbum && !selectedPhoto" 
+               x-transition:enter="transition ease-out duration-500"
+               x-transition:enter-start="opacity-0 transform translate-y-4"
+               x-transition:enter-end="opacity-100 transform translate-y-0">
             <ul class="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              <template x-for="(photo, index) in filteredPhotos" :key="photo.metadata.name">
-                <li
-                  class="hover:border-primary-300/50 dark:hover:border-primary-600/50 group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 bg-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] dark:border-gray-700/50 dark:bg-gray-800/30"
-                  @click="$dispatch('show-modal', { url: photo.spec.url })"
-                  :style="{
-                    'animation-delay': `${index * 50}ms`,
-                    'animation': selectedGroup === 'all' ? 'fadeInUp 0.6s ease-out forwards' : ''
-                  }"
-                >
-                  <div class="relative overflow-hidden rounded-t-xl">
-                    <img
-                      :src="photo.spec.url"
-                      :alt="photo.spec.displayName"
-                      class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div
-                      class="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                    ></div>
+              <template x-for="album in allAlbums" :key="album.metadata.name">
+                <li @click="selectedAlbum = album.metadata.name; resetFilters()"
+                    class="group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 bg-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] dark:border-gray-700/50 dark:bg-gray-800/30">
+                  
+                  <!-- 文件夹封面图 -->
+                  <div class="relative aspect-video overflow-hidden rounded-t-xl">
+                    <img :src="album.coverUrl || album.photos[0]?.spec.url || '/assets/img/default-album-cover.png'"
+                         :alt="album.spec.displayName"
+                         class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    
+                    <!-- 照片数量标记 -->
+                    <div class="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-black/60 px-2 py-1 text-xs text-white backdrop-blur-sm">
+                      <i class="fa fa-camera mr-1"></i>
+                      <span x-text="album.photos.length"></span>
+                    </div>
                   </div>
+                  
+                  <!-- 文件夹信息 -->
                   <div class="p-4">
-                    <h3
-                      class="truncate text-sm font-medium text-gray-900 dark:text-gray-100"
-                      x-text="photo.spec.displayName"
-                    ></h3>
+                    <h3 class="truncate text-lg font-medium text-gray-900 dark:text-gray-100" 
+                        x-text="album.spec.displayName"></h3>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400" 
+                       x-text="album.spec.description || '没有描述信息'"></p>
                   </div>
                 </li>
               </template>
             </ul>
           </div>
 
-          <template x-for="group in allPhotos" :key="group.metadata.name">
-            <div
-              x-show="selectedGroup === group.metadata.name"
-              x-transition:enter="transition ease-out duration-400"
-              x-transition:enter-start="opacity-0 transform translate-x-[-20px]"
-              x-transition:enter-end="opacity-100 transform translate-x-0"
-              x-transition:leave="transition ease-in-out duration-400"
-              x-transition:leave-start="opacity-100 transform translate-y-0"
-              x-transition:leave-end="opacity-0 transform translate-y-2"
-            >
-              <ul class="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <template x-for="(photo, index) in group.photos" :key="photo.metadata.name">
-                  <li
-                    class="relative cursor-pointer overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-                    @click="$dispatch('show-modal', { url: photo.spec.url })"
+          <!-- 照片浏览视图 (选中文件夹后显示) -->
+          <div x-show="selectedAlbum && !selectedPhoto" 
+               x-transition:enter="transition ease-out duration-500"
+               x-transition:enter-start="opacity-0 transform translate-y-4"
+               x-transition:enter-end="opacity-100 transform translate-y-0">
+            <!-- 返回按钮 -->
+            <button @click="selectedAlbum = null; resetFilters()" 
+                    class="mb-6 inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+              <i class="fa fa-arrow-left"></i>
+              返回相册列表
+            </button>
+
+            <!-- 当前相册标题 -->
+            <div class="mb-8 text-center">
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100" 
+                  x-text="allAlbums.find(album => album.metadata.name === selectedAlbum)?.spec.displayName"></h2>
+            </div>
+
+            <!-- 筛选功能区 -->
+            <div class="mb-8">
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex flex-wrap gap-2">
+                  <button @click="filterType = 'all'; filterValue = null"
+                          :class="filterType === 'all' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'"
+                          class="rounded-full px-4 py-2 text-sm font-medium transition-all duration-300">
+                    全部照片
+                  </button>
+                  
+                  <!-- 人脸识别筛选 -->
+                  <div class="relative group">
+                    <button :class="filterType === 'person' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'"
+                            class="rounded-full px-4 py-2 text-sm font-medium transition-all duration-300">
+                      <i class="fa fa-user mr-1"></i>
+                      人物
+                    </button>
+                    <div x-show="filterType === 'person'" class="absolute z-10 mt-2 w-48 rounded-lg bg-white shadow-lg dark:bg-gray-800">
+                      <div class="p-2">
+                        <template x-for="person in allPeople" :key="person">
+                          <button @click="filterValue = person"
+                                  :class="filterValue === person ? 'bg-primary/10 text-primary dark:bg-primary/20' : ''"
+                                  class="w-full text-left rounded-md px-3 py-2 text-sm transition-colors duration-200">
+                            <i class="fa fa-user mr-2"></i>
+                            <span x-text="person"></span>
+                          </button>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- 位置筛选 -->
+                  <div class="relative group">
+                    <button :class="filterType === 'location' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'"
+                            class="rounded-full px-4 py-2 text-sm font-medium transition-all duration-300">
+                      <i class="fa fa-map-marker mr-1"></i>
+                      位置
+                    </button>
+                    <div x-show="filterType === 'location'" class="absolute z-10 mt-2 w-48 rounded-lg bg-white shadow-lg dark:bg-gray-800">
+                      <div class="p-2">
+                        <template x-for="location in allLocations" :key="location">
+                          <button @click="filterValue = location"
+                                  :class="filterValue === location ? 'bg-primary/10 text-primary dark:bg-primary/20' : ''"
+                                  class="w-full text-left rounded-md px-3 py-2 text-sm transition-colors duration-200">
+                            <i class="fa fa-map-marker mr-2"></i>
+                            <span x-text="location"></span>
+                          </button>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- 标签筛选 -->
+                  <div class="relative group">
+                    <button :class="filterType === 'tag' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'"
+                            class="rounded-full px-4 py-2 text-sm font-medium transition-all duration-300">
+                      <i class="fa fa-tag mr-1"></i>
+                      标签
+                    </button>
+                    <div x-show="filterType === 'tag'" class="absolute z-10 mt-2 w-48 rounded-lg bg-white shadow-lg dark:bg-gray-800">
+                      <div class="p-2">
+                        <template x-for="tag in allTags" :key="tag">
+                          <button @click="filterValue = tag"
+                                  :class="filterValue === tag ? 'bg-primary/10 text-primary dark:bg-primary/20' : ''"
+                                  class="w-full text-left rounded-md px-3 py-2 text-sm transition-colors duration-200">
+                            <i class="fa fa-tag mr-2"></i>
+                            <span x-text="tag"></span>
+                          </button>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 筛选状态显示 -->
+                <div x-show="filterType !== 'all' && filterValue" class="flex items-center gap-2">
+                  <span class="text-sm text-gray-600 dark:text-gray-400">
+                    <span x-show="filterType === 'person'">人物:</span>
+                    <span x-show="filterType === 'location'">位置:</span>
+                    <span x-show="filterType === 'tag'">标签:</span>
+                    <span x-text="filterValue"></span>
+                  </span>
+                  <button @click="resetFilters()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 照片网格 -->
+            <ul class="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <template x-for="(photo, index) in filteredPhotos" :key="photo.metadata.name">
+                <li class="hover:border-primary/50 dark:hover:border-primary/50 group relative cursor-pointer overflow-hidden rounded-xl border border-gray-200/50 bg-white/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] dark:border-gray-700/50 dark:bg-gray-800/30"
+                    @click="selectedPhoto = photo"
                     :style="{
                       'animation-delay': `${index * 50}ms`,
-                      'animation': selectedGroup === group.metadata.name ? 'fadeInUp 0.6s ease-out forwards' : ''
-                    }"
-                  >
-                    <div class="relative overflow-hidden rounded-t-xl">
-                      <img
-                        :src="photo.spec.url"
-                        :alt="photo.spec.displayName"
-                        class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      <div
-                        class="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      ></div>
+                      'animation': 'fadeInUp 0.6s ease-out forwards'
+                    }">
+                  <div class="relative overflow-hidden rounded-t-xl">
+                    <img :src="photo.spec.url"
+                         :alt="photo.spec.displayName"
+                         class="h-64 w-full object-cover transition-transform duration-300 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                    
+                    <!-- 照片上的标签指示器 -->
+                    <div class="absolute top-2 left-2 flex flex-wrap gap-1">
+                      <template x-for="person in photo.people.slice(0, 2)" :key="person">
+                        <span class="rounded-full bg-primary/80 px-2 py-0.5 text-xs text-white backdrop-blur-sm">
+                          <i class="fa fa-user mr-1 text-xs"></i>
+                          <span x-text="person"></span>
+                        </span>
+                      </template>
+                      
+                      <template x-if="photo.location">
+                        <span class="rounded-full bg-green-500/80 px-2 py-0.5 text-xs text-white backdrop-blur-sm">
+                          <i class="fa fa-map-marker mr-1 text-xs"></i>
+                          <span x-text="photo.location.name"></span>
+                        </span>
+                      </template>
                     </div>
-                    <div class="p-4">
-                      <h3
-                        class="truncate text-sm font-medium text-gray-900 dark:text-gray-100"
-                        x-text="photo.spec.displayName"
-                      ></h3>
+                  </div>
+                  
+                  <div class="p-4">
+                    <h3 class="truncate text-sm font-medium text-gray-900 dark:text-gray-100"
+                        x-text="photo.spec.displayName"></h3>
+                    
+                    <!-- 标签显示 -->
+                    <div class="mt-2 flex flex-wrap gap-1">
+                      <template x-for="tag in photo.tags" :key="tag">
+                        <span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                          <i class="fa fa-tag mr-1 text-xs"></i>
+                          <span x-text="tag"></span>
+                        </span>
+                      </template>
                     </div>
-                  </li>
-                </template>
-              </ul>
+                  </div>
+                </li>
+              </template>
+            </ul>
+          </div>
+
+          <!-- 照片详情视图 -->
+          <div x-show="selectedPhoto" 
+               x-transition:enter="transition ease-out duration-500"
+               x-transition:enter-start="opacity-0 transform translate-y-4"
+               x-transition:enter-end="opacity-100 transform translate-y-0">
+            <!-- 返回按钮 -->
+            <button @click="selectedPhoto = null" 
+                    class="mb-6 inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-800 transition-all duration-300 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700">
+              <i class="fa fa-arrow-left"></i>
+              返回照片列表
+            </button>
+
+            <!-- 照片详情内容 -->
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+              <!-- 照片预览 -->
+              <div class="overflow-hidden rounded-xl bg-gray-100 p-4 dark:bg-gray-800">
+                <img :src="selectedPhoto.spec.url"
+                     :alt="selectedPhoto.spec.displayName"
+                     class="h-full w-full object-contain">
+              </div>
+              
+              <!-- 照片信息 -->
+              <div>
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100"
+                    x-text="selectedPhoto.spec.displayName"></h2>
+                
+                <div class="mt-6 space-y-6">
+                  <!-- 人物信息 -->
+                  <div>
+                    <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                      <i class="fa fa-user mr-2"></i>
+                      人物
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                      <template x-for="person in selectedPhoto.people" :key="person">
+                        <span class="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary dark:bg-primary/20">
+                          <span x-text="person"></span>
+                        </span>
+                      </template>
+                      <template x-if="!selectedPhoto.people || selectedPhoto.people.length === 0">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">未识别到人物</span>
+                      </template>
+                    </div>
+                  </div>
+                  
+                  <!-- 位置信息 -->
+                  <div>
+                    <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                      <i class="fa fa-map-marker mr-2"></i>
+                      拍摄地点
+                    </h3>
+                    <div x-if="selectedPhoto.location">
+                      <div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                        <span x-text="selectedPhoto.location.name"></span>
+                        <span x-if="selectedPhoto.location.address" class="text-sm text-gray-500 dark:text-gray-400" x-text="selectedPhoto.location.address"></span>
+                      </div>
+                    </div>
+                    <div x-if="!selectedPhoto.location" class="text-sm text-gray-500 dark:text-gray-400">未记录位置信息</div>
+                  </div>
+                  
+                  <!-- 标签信息 -->
+                  <div>
+                    <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                      <i class="fa fa-tag mr-2"></i>
+                      标签
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                      <template x-for="tag in selectedPhoto.tags" :key="tag">
+                        <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-300">
+                          <span x-text="tag"></span>
+                        </span>
+                      </template>
+                      <template x-if="!selectedPhoto.tags || selectedPhoto.tags.length === 0">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">未添加标签</span>
+                      </template>
+                    </div>
+                  </div>
+                  
+                  <!-- 拍摄时间 -->
+                  <div x-if="selectedPhoto.takenTime">
+                    <h3 class="mb-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                      <i class="fa fa-clock-o mr-2"></i>
+                      拍摄时间
+                    </h3>
+                    <div class="text-gray-700 dark:text-gray-300" x-text="selectedPhoto.takenTime"></div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </template>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal -->
-    <div
-      x-data="{ isOpen: false, imageUrl: '' }"
-      x-show="isOpen"
-      x-transition:enter="transition ease-out duration-300"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-200"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      @show-modal.window="isOpen = true; imageUrl = $event.detail.url"
-      @keydown.escape.window="isOpen = false"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
-      style="display: none"
-    >
+    <!-- 图片预览模态框 -->
+    <div x-data="{ isOpen: false, imageUrl: '' }"
+         x-show="isOpen"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @show-modal.window="isOpen = true; imageUrl = $event.detail.url"
+         @keydown.escape.window="isOpen = false"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90"
+         style="display: none">
       <div @click.away="isOpen = false" class="relative max-h-[90vh] max-w-[90vw]">
-        <button
-          @click="isOpen = false"
-          class="absolute -top-10 right-0 text-3xl text-white transition-colors duration-200 hover:text-gray-300"
-        >
-          &times;
+        <button @click="isOpen = false"
+                class="absolute -top-10 right-0 text-3xl text-white transition-colors duration-200 hover:text-gray-300">
+          <i class="fa fa-times"></i>
         </button>
-        <img :src="imageUrl" class="max-h-[90vh] max-w-full object-contain" alt="Preview" />
+        <img :src="imageUrl" class="max-h-[90vh] max-w-full object-contain" alt="照片预览" />
       </div>
     </div>
   </th:block>
@@ -174,4 +504,23 @@
       transform: translateX(0);
     }
   }
+  
+  /* 基础样式补充 */
+  .bg-primary {
+    background-color: #3b82f6;
+  }
+  
+  .text-primary {
+    color: #3b82f6;
+  }
+  
+  .dark {
+    color-scheme: dark;
+  }
+  
+  [data-theme="dark"] {
+    --color-background: #1a1a1a;
+    --color-text: #f3f4f6;
+  }
 </style>
+    
